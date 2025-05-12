@@ -1,0 +1,25 @@
+# Overview
+Finance Tracker is a web application built with React and Node.js that helps users manage their personal finances. Track expenses, monitor income, set budgets, and visualize your financial health with intuitive dashboards.
+
+# Features
+User Authentication: Secure signup and login
+
+Transaction Management: Add, edit, delete income/expenses
+
+Categories: Customizable transaction categories
+
+Budget Tracking: Set monthly budgets by category
+
+Data Visualization: Interactive charts and reports
+
+Responsive Design: Works on desktop and mobile devices
+
+# Technologies Used
+Frontend
+React.js
+
+Redux (for state management)
+
+Chart.js (for data visualization)
+
+Bootstrap/Material-UI (for styling)

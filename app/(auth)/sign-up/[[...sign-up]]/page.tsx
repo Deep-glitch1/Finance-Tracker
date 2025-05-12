@@ -5,7 +5,7 @@ import { Loader2 } from 'lucide-react'
 import { SignUp, ClerkLoaded, ClerkLoading } from '@clerk/nextjs'
 import { useEffect, useRef, useState } from 'react'
 
-export default function Page() {
+export default function Page() { 
   const [captchaText, setCaptchaText] = useState('')
   const [userInput, setUserInput] = useState('')
   const [error, setError] = useState('')
