@@ -26,7 +26,6 @@ const RootLayout = ({ children }: Readonly<PropsWithChildren>) => {
           <QueryProviders>
             <SheetProvider />
             <Toaster richColors theme="light" />
-
             {children}
           </QueryProviders>
         </body>
