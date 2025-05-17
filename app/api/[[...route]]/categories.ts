@@ -10,32 +10,21 @@ import { categories, insertCategorySchema } from "@/db/schema";
 
 const app = new Hono()
   .get("/", clerkMiddleware(), async (ctx) => {
-    try {
-      const auth = getAuth(ctx);
-      console.log('Auth:', auth);
+    const auth = getAuth(ctx);
 
-      if (!auth?.userId) {
-        return ctx.json({ error: "Unauthorized." }, 401);
-      }
-
-      const data = await db
-        .select({
-          id: categories.id,
-          name: categories.name,
-        })
-        .from(categories)
-        .where(eq(categories.userId, auth.userId));
-
-      return ctx.json({ data });
-    } catch (error) {
-      console.error('GET / Error:', error);
-      const err = error as Error;
-      return ctx.json({ 
-        error: "Failed to fetch categories",
-        details: err.message,
-        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-      }, 500);
+    if (!auth?.userId) {
+      return ctx.json({ error: "Unauthorized." }, 401);
     }
+
+    const data = await db
+      .select({
+        id: categories.id,
+        name: categories.name,
+      })
+      .from(categories)
+      .where(eq(categories.userId, auth.userId));
+
+    return ctx.json({ data });
   })
   .get(
     "/:id",
@@ -83,35 +72,23 @@ const app = new Hono()
       })
     ),
     async (ctx) => {
-      try {
-        const auth = getAuth(ctx);
-        console.log('POST Auth:', auth);
-        const values = ctx.req.valid("json");
-        console.log('POST Values:', values);
+      const auth = getAuth(ctx);
+      const values = ctx.req.valid("json");
 
-        if (!auth?.userId) {
-          return ctx.json({ error: "Unauthorized." }, 401);
-        }
-
-        const [data] = await db
-          .insert(categories)
-          .values({
-            id: createId(),
-            userId: auth.userId,
-            ...values,
-          })
-          .returning();
-
-        return ctx.json({ data });
-      } catch (error) {
-        console.error('POST / Error:', error);
-        const err = error as Error;
-        return ctx.json({ 
-          error: "Failed to create category",
-          details: err.message,
-          stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-        }, 500);
+      if (!auth?.userId) {
+        return ctx.json({ error: "Unauthorized." }, 401);
       }
+
+      const [data] = await db
+        .insert(categories)
+        .values({
+          id: createId(),
+          userId: auth.userId,
+          ...values,
+        })
+        .returning();
+
+      return ctx.json({ data });
     }
   )
   .post(

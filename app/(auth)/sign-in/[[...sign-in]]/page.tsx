@@ -114,7 +114,7 @@ export default function Page() {
             <ClerkLoaded>
               <SignIn 
                 path="/sign-in"
-                redirectUrl="/"
+                afterSignInUrl="/"
                 afterSignUpUrl="/"
               />
             </ClerkLoaded>
