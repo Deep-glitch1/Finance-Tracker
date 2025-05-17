@@ -10,21 +10,31 @@ import { categories, insertCategorySchema } from "@/db/schema";
 
 const app = new Hono()
   .get("/", clerkMiddleware(), async (ctx) => {
-    const auth = getAuth(ctx);
+    try {
+      const auth = getAuth(ctx);
+      console.log('Auth:', auth);
 
-    if (!auth?.userId) {
-      return ctx.json({ error: "Unauthorized." }, 401);
+      if (!auth?.userId) {
+        return ctx.json({ error: "Unauthorized." }, 401);
+      }
+
+      const data = await db
+        .select({
+          id: categories.id,
+          name: categories.name,
+        })
+        .from(categories)
+        .where(eq(categories.userId, auth.userId));
+
+      return ctx.json({ data });
+    } catch (error) {
+      console.error('GET / Error:', error);
+      return ctx.json({ 
+        error: "Failed to fetch categories",
+        details: error.message,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      }, 500);
     }
-
-    const data = await db
-      .select({
-        id: categories.id,
-        name: categories.name,
-      })
-      .from(categories)
-      .where(eq(categories.userId, auth.userId));
-
-    return ctx.json({ data });
   })
   .get(
     "/:id",
@@ -72,23 +82,34 @@ const app = new Hono()
       })
     ),
     async (ctx) => {
-      const auth = getAuth(ctx);
-      const values = ctx.req.valid("json");
+      try {
+        const auth = getAuth(ctx);
+        console.log('POST Auth:', auth);
+        const values = ctx.req.valid("json");
+        console.log('POST Values:', values);
 
-      if (!auth?.userId) {
-        return ctx.json({ error: "Unauthorized." }, 401);
+        if (!auth?.userId) {
+          return ctx.json({ error: "Unauthorized." }, 401);
+        }
+
+        const [data] = await db
+          .insert(categories)
+          .values({
+            id: createId(),
+            userId: auth.userId,
+            ...values,
+          })
+          .returning();
+
+        return ctx.json({ data });
+      } catch (error) {
+        console.error('POST / Error:', error);
+        return ctx.json({ 
+          error: "Failed to create category",
+          details: error.message,
+          stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        }, 500);
       }
-
-      const [data] = await db
-        .insert(categories)
-        .values({
-          id: createId(),
-          userId: auth.userId,
-          ...values,
-        })
-        .returning();
-
-      return ctx.json({ data });
     }
   )
   .post(
