@@ -2,4 +2,10 @@ import { hc } from "hono/client";
 
 import { AppType } from "@/app/api/[[...route]]/route";
 
-export const client = hc<AppType>(process.env.NEXT_PUBLIC_APP_URL!);
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+if (!APP_URL) {
+  console.error('NEXT_PUBLIC_APP_URL is not defined');
+}
+console.log('Using API URL:', APP_URL);
+
+export const client = hc<AppType>(APP_URL!);

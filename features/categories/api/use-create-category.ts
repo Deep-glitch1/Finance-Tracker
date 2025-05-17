@@ -12,16 +12,25 @@ export const useCreateCategory = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
-      const response = await client.api.categories.$post({ json });
-
-      return await response.json();
+      try {
+        console.log('Attempting to create category:', json);
+        const response = await client.api.categories.$post({ json });
+        console.log('API Response:', response);
+        const data = await response.json();
+        console.log('Response data:', data);
+        return data;
+      } catch (error) {
+        console.error('Error creating category:', error);
+        throw error;
+      }
     },
     onSuccess: () => {
       toast.success("Category created.");
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
-    onError: () => {
-      toast.error("Failed to create category.");
+    onError: (error) => {
+      console.error('Mutation error:', error);
+      toast.error(`Failed to create category: ${error.message}`);
     },
   });
 
