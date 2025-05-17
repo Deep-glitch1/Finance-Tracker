@@ -8,12 +8,17 @@ if (!process.env.DATABASE_URL) {
 // Convert postgresql:// to postgres:// if needed
 const dbUrl = process.env.DATABASE_URL.replace(/^postgresql:\/\//, 'postgres://');
 
+console.log('Connecting to database...');
+let sql;
+let db;
+
 try {
-  console.log('Connecting to database...');
-  export const sql = neon(dbUrl);
-  export const db = drizzle(sql);
+  sql = neon(dbUrl);
+  db = drizzle(sql);
   console.log('Database connection established successfully');
 } catch (error) {
   console.error('Failed to connect to database:', error);
   throw error;
 }
+
+export { sql, db };
