@@ -1,10 +1,9 @@
-import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
-import { Loader2 } from "lucide-react";
+"use client";
 
 import Link from "next/link";
 
 import { links } from "@/config";
-
+import { AuthButtons } from "./auth-buttons";
 import { Filters } from "./filters";
 import { HeaderLogo } from "./header-logo";
 import { Navigation } from "./navigation";
@@ -21,13 +20,7 @@ export const Header = () => {
           </div>
 
           <div className="flex items-center gap-x-2">
-            <ClerkLoaded>
-              <UserButton afterSignOutUrl="/" />
-            </ClerkLoaded>
-
-            <ClerkLoading>
-              <Loader2 className="size-8 animate-spin text-slate-400" />
-            </ClerkLoading>
+            <AuthButtons />
 
             <Link
               href={links.sourceCode}

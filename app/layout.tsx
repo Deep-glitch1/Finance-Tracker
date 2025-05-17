@@ -20,18 +20,17 @@ export const metadata: Metadata = siteConfig;
 
 const RootLayout = ({ children }: Readonly<PropsWithChildren>) => {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ClerkProvider appearance={{ baseTheme: undefined }}>
           <QueryProviders>
             <SheetProvider />
             <Toaster richColors theme="light" />
-
             {children}
           </QueryProviders>
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 };
 
