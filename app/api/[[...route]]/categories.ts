@@ -29,10 +29,11 @@ const app = new Hono()
       return ctx.json({ data });
     } catch (error) {
       console.error('GET / Error:', error);
+      const err = error as Error;
       return ctx.json({ 
         error: "Failed to fetch categories",
-        details: error.message,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        details: err.message,
+        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
       }, 500);
     }
   })
@@ -104,10 +105,11 @@ const app = new Hono()
         return ctx.json({ data });
       } catch (error) {
         console.error('POST / Error:', error);
+        const err = error as Error;
         return ctx.json({ 
           error: "Failed to create category",
-          details: error.message,
-          stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+          details: err.message,
+          stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
         }, 500);
       }
     }
