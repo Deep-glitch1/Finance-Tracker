@@ -12,10 +12,7 @@
     "db:seed": "bun ./scripts/seed.ts",
     "db:studio": "drizzle-kit studio"
   },
-  "author": {
-    "name": "Deepak,Dhruv,Himanshu",
-    "email": "deepaksinghburathoki2019@gmail.com"
-  },
+ 
   "description": "Track your income and expenses with Finance.",
   "keywords": [
     "reactjs",
