@@ -189,10 +189,6 @@ This project is open source and available under the MIT License.
 
 Contributions, issues, and feature requests are welcome!
 
-## 👤 Author
-
-**Deep Patel**
-- GitHub: [@Deep-glitch1](https://github.com/Deep-glitch1)
 
 ## 🙏 Acknowledgments
 
