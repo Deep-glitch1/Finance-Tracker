@@ -5,6 +5,8 @@ import { Loader2, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
+export const dynamic = "force-dynamic";
+
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
