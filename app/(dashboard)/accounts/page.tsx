@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { Loader2, Plus } from "lucide-react";
 
 import { DataTable } from "@/components/data-table";
@@ -12,7 +13,7 @@ import { useNewAccount } from "@/features/accounts/hooks/use-new-account";
 
 import { columns } from "./columns";
 
-const AccountsPage = () => {
+const AccountsPageContent = () => {
   const newAccount = useNewAccount();
   const deleteAccounts = useBulkDeleteAccounts();
   const accountsQuery = useGetAccounts();
@@ -64,6 +65,14 @@ const AccountsPage = () => {
         </CardContent>
       </Card>
     </div>
+  );
+};
+
+const AccountsPage = () => {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center"><Loader2 className="size-6 animate-spin" /></div>}>
+      <AccountsPageContent />
+    </Suspense>
   );
 };
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { Loader2, Plus } from "lucide-react";
 
 import { DataTable } from "@/components/data-table";
@@ -12,7 +13,7 @@ import { useNewCategory } from "@/features/categories/hooks/use-new-category";
 
 import { columns } from "./columns";
 
-const CategoriesPage = () => {
+const CategoriesPageContent = () => {
   const newCategory = useNewCategory();
   const deleteCategories = useBulkDeleteCategories();
   const categoriesQuery = useGetCategories();
@@ -66,6 +67,14 @@ const CategoriesPage = () => {
         </CardContent>
       </Card>
     </div>
+  );
+};
+
+const CategoriesPage = () => {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center"><Loader2 className="size-6 animate-spin" /></div>}>
+      <CategoriesPageContent />
+    </Suspense>
   );
 };
 

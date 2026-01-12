@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { Loader2, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -30,7 +31,7 @@ const INITIAL_IMPORT_RESULTS = {
   meta: [],
 };
 
-const TransactionsPage = () => {
+const TransactionsPageContent = () => {
   const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
   const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
 
@@ -143,6 +144,14 @@ const TransactionsPage = () => {
         </CardContent>
       </Card>
     </div>
+  );
+};
+
+const TransactionsPage = () => {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center"><Loader2 className="size-6 animate-spin" /></div>}>
+      <TransactionsPageContent />
+    </Suspense>
   );
 };
 
