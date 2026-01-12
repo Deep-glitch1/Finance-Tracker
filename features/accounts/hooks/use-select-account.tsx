@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { Select } from "@/components/select";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import { useCreateAccount } from "@/features/accounts/api/use-create-account";
 import { useGetAccounts } from "@/features/accounts/api/use-get-accounts";
 
 export const useSelectAccount = (): [
-  () => JSX.Element,
+  () => React.JSX.Element,
   () => Promise<unknown>,
 ] => {
   const accountQuery = useGetAccounts();
