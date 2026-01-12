@@ -46,4 +46,8 @@ export const siteConfig: Metadata = {
   ] as Array<string>,
 } as const;
 
+export const links = {
+  sourceCode: "https://github.com/Deep-glitch1/Finance-Tracker",
+} as const;
+
 
