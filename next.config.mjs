@@ -1,15 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config, { dev }) => {
-    if (dev) {
-      // Disable webpack caching in development
+  // Enable experimental features for better performance
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'recharts', 'react-icons'],
+  },
+  
+  webpack: (config, { isServer }) => {
+    // Disable problematic filesystem cache on Windows
+    if (!isServer) {
       config.cache = false;
     }
-
-    // Suppress punycode warning
+    
+    // Suppress warnings
     config.ignoreWarnings = [
       { module: /node_modules\/punycode/ },
-      { message: /the `punycode` module is deprecated/ }
+      { message: /the `punycode` module is deprecated/ },
+      { message: /Caching failed for pack/ },
     ];
 
     return config;

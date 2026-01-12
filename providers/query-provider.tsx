@@ -7,7 +7,17 @@ function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000,
+        // Data is considered fresh for 10 minutes (more aggressive caching)
+        staleTime: 10 * 60 * 1000,
+        // Keep unused data in cache for 30 minutes
+        gcTime: 30 * 60 * 1000,
+        // Retry failed requests only once
+        retry: 1,
+        // Don't refetch on window focus to improve performance
+        refetchOnWindowFocus: false,
+        // Prevent unnecessary background refetches
+        refetchOnMount: false,
+        refetchOnReconnect: false,
       },
     },
   });
