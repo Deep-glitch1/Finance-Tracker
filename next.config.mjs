@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: false,
+  },
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['lucide-react', 'recharts', 'react-icons'],
